@@ -1,4 +1,6 @@
-import { index } from "../../../indices/pokemon-name-index.js";
+import { index } from "../../../search/indices/pokemon-index.js";
+
+const DEFAULT_SEARCH_SIZE = 10;
 
 export const searchByName = (condition) => {
     if (!condition.keyword) {
@@ -7,6 +9,6 @@ export const searchByName = (condition) => {
     if (condition.size) {
         return index.filter((pokemon) => pokemon.name.includes(condition.keyword)).slice(0, size);
     } else {
-        return index.filter((pokemon) => pokemon.name.includes(condition.keyword)).slice(0, 10);
+        return index.filter((pokemon) => pokemon.name.includes(condition.keyword)).slice(0, DEFAULT_SEARCH_SIZE);
     }
 };

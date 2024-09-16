@@ -3,44 +3,76 @@
 
 <head>
     <title>Pokemon</title>
+    <link rel="stylesheet" href="./main.css">
 </head>
 
 <body>
+<header>
+    <h1>Pokemon</h1>
+    <form id="search-form">
+        <label><input id="search-input" type="text" placeholder="keyword"></label>
+        <label><input id="search-size" type="number" placeholder="size"></label>
+        <input type="submit">
+    </form>
+</header>
 
-<h1>Pokemon</h1>
-
-<ul>
-    <li>
-        <a href="../ui/pokemon/random">random</a>
-    </li>
-</ul>
-
-<form id="search-form">
-    <input id="search-input" type="text">
-</form>
-
-<div id="search-result"></div>
+<main>
+    <table id="search-result"></table>
+</main>
 
 <script type="module">
-    import { searchByName } from "/ui/pokemon/search/by-name.js";
+    import { search } from "../search/index.js";
+
+    const renderTypes = (types) => {
+        const typesEl = document.createElement("ul");
+
+        typesEl.append(...types.map((t) => {
+            const el = document.createElement("li");
+            el.append(t);
+            return el;
+        }))
+
+        return typesEl;
+    };
+
+    const renderAbilities = (abilities) => {
+        const abilitiesEl = document.createElement("ul");
+
+        abilitiesEl.append(...abilities.map((a) => {
+            const el = document.createElement("li");
+            el.append(a);
+            return el;
+        }))
+
+        return abilitiesEl;
+    };
 
     document.getElementById("search-form").addEventListener("submit", (e) => {
         e.preventDefault();
 
-        const searchResult = searchByName({ keyword: document.getElementById("search-input").value });
+        console.info("searching...");
 
-        document.getElementById("search-result").replaceChildren();
-        document.getElementById("search-result")
+        const searchResult = search({
+            keyword: document.getElementById("search-input").value,
+            size: document.getElementById("search-size").value,
+        });
+
+        const resultTableEl = document.getElementById("search-result");
+        resultTableEl.replaceChildren();
+        resultTableEl
             .append(...searchResult.map((pokemon) => {
-                const recordEl = document.createElement("p");
+                const recordEl = document.createElement("tr");
 
-                recordEl.innerHTML = `<a href="../ui/pokemon?id=${pokemon.id}">${pokemon.id} ${pokemon.name}</a>`;
+                recordEl.innerHTML = `
+                    <td>${pokemon.id}</td>
+                    <td>${pokemon.name}</td>
+                    <td>${renderTypes(pokemon.types).outerHTML}</td>
+                    <td>${renderAbilities(pokemon.abilities).outerHTML}</td>
+                `;
 
                 return recordEl;
             }));
     });
 </script>
-
 </body>
-
 </html>
