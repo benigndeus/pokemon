@@ -11,7 +11,7 @@
 
 <ul>
     <li>
-        <a href="/ui/pokemon/random" target="_blank">random</a>
+        <a href="../ui/pokemon/random">random</a>
     </li>
 </ul>
 
@@ -34,7 +34,7 @@
             .append(...searchResult.map((pokemon) => {
                 const recordEl = document.createElement("p");
 
-                recordEl.innerHTML = `<a href="/ui/pokemon?id=${pokemon.id}">${pokemon.id} ${pokemon.name}</a>`;
+                recordEl.innerHTML = `<a href="../ui/pokemon?id=${pokemon.id}">${pokemon.id} ${pokemon.name}</a>`;
 
                 return recordEl;
             }));
