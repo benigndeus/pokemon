@@ -1,6 +1,6 @@
-import { index as pokemonIndex } from "./indices/pokemon-index.js";
+import { index as pokeDex } from "./indices/pokemon-index.js";
 import { index as namesIndex } from "./indices/name-3gram-index.js";
-import { index as abilitiesIndex } from "./indices/ability-index.js";
+import { index as abilitiesIndex } from "./indices/ability-3gram-index.js";
 
 const DEFAULT_SEARCH_SIZE = 10;
 const INTENT = Object.freeze({
@@ -27,9 +27,9 @@ export const search = (condition) => {
 
     switch(intent) {
         case INTENT.ABILITY:
-            return abilitiesIndex[trimmedKeyword].map((id) => pokemonIndex[id - 1]).slice(0, size);
+            return abilitiesIndex[trimmedKeyword].map((id) => pokeDex[id - 1]).slice(0, size);
         case INTENT.NAME:
-            return namesIndex[trimmedKeyword].map((id) => pokemonIndex[id - 1]).slice(0, size);
+            return namesIndex[trimmedKeyword].map((id) => pokeDex[id - 1]).slice(0, size);
         default:
             throw "Failed to search.";
     }

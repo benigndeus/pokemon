@@ -4,7 +4,7 @@ import { index as pokemonIndex } from "../indices/pokemon-index.js";
 const NGRAM = 3;
 const names = {};
 
-for(const pokemon of pokemonIndex) {
+for (const pokemon of pokemonIndex) {
     for (let i = 0; i < pokemon.name.length; i++) {
         for (let j = 1; j <= NGRAM; j++) {
             const gram = pokemon.name.slice(i, i + j);
