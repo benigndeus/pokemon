@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <title>Pokemon</title>
+</head>
+
+<body>
+
+<h1>Pokemon</h1>
+
+<ul>
+    <li>
+        <a href="/ui/pokemon/random" target="_blank">random</a>
+    </li>
+</ul>
+
+<form id="search-form">
+    <input id="search-input" type="text">
+</form>
+
+<div id="search-result"></div>
+
+<script type="module">
+    import { searchByName } from "/ui/pokemon/search/by-name.js";
+
+    document.getElementById("search-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const searchResult = searchByName({ keyword: document.getElementById("search-input").value });
+
+        document.getElementById("search-result").replaceChildren();
+        document.getElementById("search-result")
+            .append(...searchResult.map((pokemon) => {
+                const recordEl = document.createElement("p");
+
+                recordEl.innerHTML = `<a href="/ui/pokemon?id=${pokemon.id}">${pokemon.id} ${pokemon.name}</a>`;
+
+                return recordEl;
+            }));
+    });
+</script>
+
+</body>
+
+</html>
